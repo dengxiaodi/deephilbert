@@ -71,7 +71,8 @@ if __name__ == "__main__":
 	# load methylation data
 
 	methy_data = np.genfromtxt(filename_input, delimiter = ',', 
-		dtype = [('ref', 'S12'), ('beta', '<f8'), ('chr', 'S8'), ('pos', '<i16')])
+		dtype = ('S12', '<f8', 'S8', '<u8'),
+		names = ('ref', 'beta', 'chr', 'pos'))
 	methy_genome = np.zeros(chrsize)
 	methy_genome[methy_data['pos']] = methy_data['beta']
 	methy_cg = methy_genome[cg_indexes]
