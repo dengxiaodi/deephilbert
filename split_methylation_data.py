@@ -11,7 +11,7 @@ from numpy import genfromtxt
 def split_methylation_file(filename, output_folder) :
 	methy_data = genfromtxt(filename, delimiter = '\t', skip_header = 1,
 		usecols = (0, 1, 2, 3),
-		dtype = ('S12', '<f8', 'S8', '<i16'), 
+		dtype = ('S12', '<f8', 'S8', '<u8'), 
 		names = ('ref', 'beta', 'chr', 'pos'))
 
 	# filter out all unknown chrs
