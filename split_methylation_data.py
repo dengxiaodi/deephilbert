@@ -28,7 +28,7 @@ def split_methylation_file(filename, output_folder) :
 			methy_data[methy_data['chr'] == chr], 
 			fmt=('%s, %f, %s, %ld'),
 			delimiter = ',')
-		print('** {1}.csv written complete'.format(chr))
+		print('** {chr}.csv written complete'.format(chr = chr))
 
 if __name__ == "__main__":
 
@@ -56,6 +56,6 @@ if __name__ == "__main__":
 
 	# read & parse input file
 
-	print('* parsing methylation data file ...')
+	print('[*] parsing methylation data file ...')
 	split_methylation_file(filename_input, folder_output)
-	print('* splite complete')
+	print('[*] splite complete')
