@@ -70,7 +70,7 @@ if __name__ == "__main__":
 	chrsize = cg_index['chrsize']
 	cg_indexes = cg_index['indexes']
 
-	print('* load cg indexes complete')
+	print('[*] cg indexes loaded')
 
 	# load methylation data
 
@@ -86,8 +86,6 @@ if __name__ == "__main__":
 	print(methy_genome)
 	print(methy_cg)
 
-	v = np.random.normal(0, 1, size = 5000)
-
-	generate_hilbert_map(v, 5)
+	generate_hilbert_map(methy_cg, 5)
 
 	print('[*] complete')
