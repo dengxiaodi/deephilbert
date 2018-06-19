@@ -5,6 +5,10 @@ import argparse
 import os
 import shutil
 import numpy as np
+import matplotlib as mpl
+if os.environ.get('DISPLAY','') == '':
+    print('[!] No display found, using non-interactive Agg backend')
+    mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
@@ -86,4 +90,4 @@ if __name__ == "__main__":
 
 	generate_hilbert_map(v, 5)
 
-	print('* complete')
+	print('[*] complete')
