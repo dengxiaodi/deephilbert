@@ -33,8 +33,11 @@ def generate_hilbert_map(v, r) :
 	xs, ys = np.mgrid[xmin:xmax:N, ymin:ymax:N]
 	zs = griddata((x, y), z, (xs, ys))
 
-	plt.imshow(zs.T, extent = extent, cmap = cm.gray)
-	plt.savefig("test.png")
+	fig = plt.imshow(zs.T, extent = extent, cmap = cm.gray)
+	plt.axis('off')
+	fig.axes.get_xaxis().set_visible(False)
+	fig.axes.get_yaxis().set_visible(False)
+	plt.savefig("test.png", bbox_inches='tight', pad_inches = 0)
 
 if __name__ == "__main__":
 
