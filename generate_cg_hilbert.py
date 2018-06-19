@@ -6,7 +6,7 @@ import os
 import shutil
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.mlab import griddata
+from scipy.interpolate import griddata
 
 import hilbert as hb
 
@@ -22,7 +22,7 @@ def generate_hilbert_map(v, r) :
 	ymax = int(np.ceil(np.max(y)))
 	extent = (xmin, xmax, ymin, ymax)
 	xs, ys = np.mgrid[xmin:xmax:N, ymin:ymax:N]
-	rdata = griddata(x, y, z, xs, ys)
+	zs = griddata((x, y), z, (xs, ys))
 
 	plt.imshow(rdata.T, extent = extent)
 	plt.savefig("test.png")
