@@ -24,7 +24,7 @@ def generate_hilbert_map(v, r) :
 	xs, ys = np.mgrid[xmin:xmax:N, ymin:ymax:N]
 	zs = griddata((x, y), z, (xs, ys))
 
-	plt.imshow(rdata.T, extent = extent)
+	plt.imshow(zs.T, extent = extent)
 	plt.savefig("test.png")
 
 if __name__ == "__main__":
