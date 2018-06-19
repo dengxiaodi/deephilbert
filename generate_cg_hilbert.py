@@ -11,6 +11,7 @@ if os.environ.get('DISPLAY','') == '':
     mpl.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
+import matplotlib.cm as cm
 
 import hilbert as hb
 
@@ -20,15 +21,19 @@ def generate_hilbert_map(v, r) :
 	y = plt_data[:, 1]
 	z = plt_data[:, 2]
 	N = 300j
-	xmin = int(np.floor(np.min(x)))
-	xmax = int(np.ceil(np.max(x)))
-	ymin = int(np.floor(np.min(y)))
-	ymax = int(np.ceil(np.max(y)))
+	# xmin = int(np.floor(np.min(x)))
+	# xmax = int(np.ceil(np.max(x)))
+	# ymin = int(np.floor(np.min(y)))
+	# ymax = int(np.ceil(np.max(y)))
+	xmin = 0
+	xmax = 1
+	ymin = 0
+	ymax = 1
 	extent = (xmin, xmax, ymin, ymax)
 	xs, ys = np.mgrid[xmin:xmax:N, ymin:ymax:N]
 	zs = griddata((x, y), z, (xs, ys))
 
-	plt.imshow(zs.T, extent = extent)
+	plt.imshow(zs.T, extent = extent, cmap = cm.gray)
 	plt.savefig("test.png")
 
 if __name__ == "__main__":
