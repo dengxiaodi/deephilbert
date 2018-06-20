@@ -68,6 +68,9 @@ if __name__ == "__main__":
 	chrsize = cg_index['chrsize']
 	cg_indexes = cg_index['indexes']
 
+	print(methy_data['pos'])
+	print(cg_indexes)
+
 	print('[*] cg indexes loaded')
 
 	# load methylation data
