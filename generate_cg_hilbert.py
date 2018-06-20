@@ -82,7 +82,7 @@ if __name__ == "__main__":
 	# generate hilbert curve
 
 	print(methy_genome)
-	print(methy_cg)
+	print(methy_cg[methy_cg != 0])
 
 	generate_hilbert_map(methy_cg, 10)
 
