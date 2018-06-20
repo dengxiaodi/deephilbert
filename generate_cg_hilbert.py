@@ -68,9 +68,6 @@ if __name__ == "__main__":
 	chrsize = cg_index['chrsize']
 	cg_indexes = cg_index['indexes']
 
-	print(methy_data['pos'])
-	print(cg_indexes)
-
 	print('[*] cg indexes loaded')
 
 	# load methylation data
@@ -81,6 +78,9 @@ if __name__ == "__main__":
 	methy_genome = np.zeros(chrsize)
 	methy_genome[methy_data['pos']] = methy_data['beta']
 	methy_cg = methy_genome[cg_indexes]
+
+	print(methy_data['pos'])
+	print(cg_indexes)
 
 	# generate hilbert curve
 
