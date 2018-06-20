@@ -21,11 +21,11 @@ def generate_hilbert_map(v, r) :
 	y = plt_data[:, 1]
 	z = plt_data[:, 2]
 	N = 300j
-	
+
 	dmax = 2**r
 	xs, ys = np.mgrid[0:dmax:N, 0:dmax:N]
 	zs = griddata((x, y), z, (xs, ys))
-	plt.imsave("test.png", zs.T, cmap = cm.gray_r, vmin = 0, vmax = 1)
+	plt.imsave("t.png", zs.T, cmap = cm.gray_r, vmin = 0, vmax = 1)
 
 if __name__ == "__main__":
 
