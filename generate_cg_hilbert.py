@@ -22,6 +22,8 @@ def generate_hilbert_map(v, r) :
 	z = plt_data[:, 2]
 	N = 300j
 
+	print(max(x))
+	print(max(y))
 	dmax = 2**r
 	xs, ys = np.mgrid[0:dmax:N, 0:dmax:N]
 	zs = griddata((x, y), z, (xs, ys))
@@ -82,6 +84,6 @@ if __name__ == "__main__":
 	print(methy_genome)
 	print(methy_cg)
 
-	generate_hilbert_map(methy_cg, 5)
+	generate_hilbert_map(methy_cg, 10)
 
 	print('[*] complete')
