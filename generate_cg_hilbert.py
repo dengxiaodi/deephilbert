@@ -51,7 +51,7 @@ if __name__ == "__main__":
 	# parameter check
 
 	if not os.path.isfile(filename_input) :
-		print("TCGA methylation.text file \"" + filename_input + "\" does not exist!")
+		print("[~] TCGA methylation.text file \"" + filename_input + "\" does not exist!")
 		exit(-1)
 
 	if not os.path.isfile(filename_index) :
