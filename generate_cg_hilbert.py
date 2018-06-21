@@ -80,7 +80,7 @@ if __name__ == "__main__":
 		chrdata = dict_cg_indexes[chrname]
 		genome_size += chrdata[1]
 		cgs_offset = chrdata[2] + chrdata[0]
-		np.append(cgs, cgs_offset)
+		cgs = np.append(cgs, cgs_offset)
 
 	genome = np.zeros(genome_size)
 	genome[meth_data['pos']] = meth_data['beta']
