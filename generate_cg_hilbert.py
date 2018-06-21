@@ -91,7 +91,7 @@ if __name__ == "__main__":
 		genome_meth = np.append(genome_meth, meth)
 
 	print('meth_data size: {0}'.format(len(meth_data)))
-	print('hitted meth_data size: {0}'.format(len(cg_meth)))
+	print('hitted meth_data size: {0}'.format(len(cg_meth[cg_meth != 0])))
 
 	# generate hilbert curve
 
