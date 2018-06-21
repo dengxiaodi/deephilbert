@@ -65,7 +65,6 @@ if __name__ == "__main__":
 	cg_indexes_file = np.load(filename_index)
 	cg_indexes = cg_indexes_file['indexes']
 	dict_cg_indexes = cg_indexes.item()
-	
 
 	# load methylation data
 
@@ -75,13 +74,13 @@ if __name__ == "__main__":
 		names = ('ref', 'beta', 'chr', 'pos'))
 
 	print('[*] building methylation data list')
-	cgs = []
+	cgs = np.array([])
 	genome_size = 0
 	for chrname in dict_cg_indexes :
 		chrdata = dict_cg_indexes[chrname]
 		genome_size += chrdata[1]
 		cgs_offset = chrdata[2] + chrdata[0]
-		cgs += cgs_offset
+		np.append(cgs, cgs_offset)
 
 	genome = np.zeros(genome_size)
 	genome[meth_data['pos']] = meth_data['beta']
