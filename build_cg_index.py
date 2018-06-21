@@ -9,7 +9,7 @@ import re
 def build_cg_index(filename_ref_seq, filename_cg_index) :
 	# load sequence file
 	print('[*] loading reference sequence')
-	dict_ref_seq = {}
+	list_ref_seq = []
 	with open(filename_ref_seq, 'r') as ref_seq_file :
 		chrname = ''
 		seq = ''
@@ -19,7 +19,7 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 				# save current seq for current chr
 
 				if(chrname != ''):
-					dict_ref_seq[chrname] = seq
+					list_ref_seq += [(chrname, seq)]
 				
 				# new chrname & seq
 
@@ -32,25 +32,26 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 		# write the last chr
 
 		if(chrname != ''):
-			dict_ref_seq[chrname] = seq
+			list_ref_seq += [(chrname, seq)]
 	ref_seq_file.close()
 
 	# build cg indexes
 
 	print('[*] building cg indexes')
-	dict_cg_indexes = {}
+	list_cg_indexes = []
 	offset = 0
-	for chrname in dict_ref_seq:
+	for ref_seq in list_ref_seq:
+		chrname = ref_seq[0]
+		seq = ref_seq[1]
 		print('    building cg indexes for reference sequence: {0}'.format(chrname))
-		seq = dict_ref_seq[chrname]
 		chrlen = len(seq)
 		offset += chrlen
 		indexes = [m.start() for m in re.finditer("CG", seq)]
-		dict_cg_indexes[chrname] = (offset, chrlen, np.array(indexes))
+		list_cg_indexes += [(offset, chrlen, np.array(indexes))]
 	
 	if filename_cg_index == None :
 		filename_cg_index = os.path.splitext(os.path.basename(filename_ref_seq))[0] + '.cgidx'
-	np.savez(filename_cg_index, dict_cg_indexes)
+	np.savez(filename_cg_index, list_cg_indexes)
 
 	return filename_cg_index
 
