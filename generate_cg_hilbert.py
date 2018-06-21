@@ -85,7 +85,7 @@ if __name__ == "__main__":
 		chr_cg_index = chrdata[2]
 
 		meth = np.zeros(chr_size)
-		chr_meth_data = meth_data[meth_data['chr'].trim() == chrname]
+		chr_meth_data = meth_data[meth_data['chr'] == chrname]
 		meth[chr_meth_data['pos'] - 1] = chr_meth_data['beta']
 		cg = meth[chr_cg_index - 1]
 
