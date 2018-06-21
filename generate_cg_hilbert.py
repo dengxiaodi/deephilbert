@@ -86,14 +86,11 @@ if __name__ == "__main__":
 	genome[meth_data['pos']] = meth_data['beta']
 	cg = genome[cgs]
 
-	print(meth_data['pos'])
-	print(cgs)
+	print('meth_data size: {0}'.format(len(meth_data)))
+	print('hitted meth_data size: {0}'.format(len(cg[cg != 0])))
 
 	# generate hilbert curve
 
-	print(genome)
-	print(cg[cg != 0])
-
-	generate_hilbert_map(cg, 10)
+	# generate_hilbert_map(cg, 10)
 
 	print('[*] complete')
