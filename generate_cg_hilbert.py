@@ -69,7 +69,7 @@ if __name__ == "__main__":
 	# load methylation data
 
 	print('[*] loading methyaltion data')
-	meth_data = np.genfromtxt(filename_input, delimiter = ',', 
+	meth_data = np.genfromtxt(filename_input, delimiter = ',', autostrip = True,
 		dtype = ('|S12', '<f8', '|S8', '<u8'),
 		names = ('ref', 'beta', 'chr', 'pos'))
 
