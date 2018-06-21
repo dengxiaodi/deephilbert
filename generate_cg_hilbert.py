@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
 	print('[*] loading methyaltion data')
 	meth_data = np.genfromtxt(filename_input, delimiter = ',', 
-		dtype = ('S12', '<f8', 'S8', '<u8'),
+		dtype = ('|S12', '<f8', '|S8', '<u8'),
 		names = ('ref', 'beta', 'chr', 'pos'))
 
 	print(meth_data)
