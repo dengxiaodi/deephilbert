@@ -52,7 +52,7 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 	
 	if filename_cg_index == None :
 		filename_cg_index = os.path.splitext(os.path.basename(filename_ref_seq))[0] + '.cgidx'
-	np.savez(filename_cg_index, dict_cg_indexes)
+	np.savez(filename_cg_index, indexes = dict_cg_indexes)
 
 	return filename_cg_index
 
