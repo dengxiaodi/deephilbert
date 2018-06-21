@@ -5,6 +5,7 @@ import argparse
 import os
 import numpy as np
 import re
+import collections
 
 def build_cg_index(filename_ref_seq, filename_cg_index) :
 	# load sequence file
@@ -38,7 +39,7 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 	# build cg indexes
 
 	print('[*] building cg indexes')
-	list_cg_indexes = []
+	dict_cg_indexes = collections.OrderedDict()
 	offset = 0
 	for ref_seq in list_ref_seq:
 		chrname = ref_seq[0]
@@ -47,11 +48,11 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 		chrlen = len(seq)
 		offset += chrlen
 		indexes = [m.start() for m in re.finditer("CG", seq)]
-		list_cg_indexes += [(offset, chrlen, np.array(indexes))]
+		dict_cg_indexes[chrname] = [(offset, chrlen, np.array(indexes))]
 	
 	if filename_cg_index == None :
 		filename_cg_index = os.path.splitext(os.path.basename(filename_ref_seq))[0] + '.cgidx'
-	np.savez(filename_cg_index, list_cg_indexes)
+	np.savez(filename_cg_index, dict_cg_indexes)
 
 	return filename_cg_index
 
