@@ -74,7 +74,7 @@ if __name__ == "__main__":
 		names = ('ref', 'beta', 'chr', 'pos'))
 
 	print('[*] building methylation data list')
-	cgs = np.array([])
+	cgs = np.array([], dtype = '<i8')
 	genome_size = 0
 	for chrname in dict_cg_indexes :
 		chrdata = dict_cg_indexes[chrname]
