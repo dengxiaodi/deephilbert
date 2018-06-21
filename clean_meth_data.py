@@ -24,7 +24,7 @@ def clean_meth_data(filename_input, filename_output) :
 	if filename_output == None :
 		filename_output = os.path.splitext(os.path.basename(filename_input))[0] + '.csv'
 	np.savetxt(filename_output, 
-		methy_data[methy_data['chr'] == chr], 
+		methy_data, 
 		fmt=('%s, %f, %s, %ld'), 
 		delimiter = ',')
 
