@@ -74,20 +74,24 @@ if __name__ == "__main__":
 		names = ('ref', 'beta', 'chr', 'pos'))
 
 	print('[*] building methylation data list')
-	cgs = np.array([], dtype = '<i8')
-	genome_size = 0
+	cg_meth = np.array([], dtype = '<f8')
+	genome_meth = np.array([], dtype = '<f8')
 	for chrname in dict_cg_indexes :
+		print('    parsing: {0}'.format(chrname))
 		chrdata = dict_cg_indexes[chrname]
-		genome_size += chrdata[1]
-		cgs_offset = chrdata[2] + chrdata[0]
-		cgs = np.append(cgs, cgs_offset)
+		chr_size = chrdata[1]
+		chr_cg_index = chrdata[2]
 
-	genome = np.zeros(genome_size)
-	genome[meth_data['pos']] = meth_data['beta']
-	cg = genome[cgs]
+		meth = np.zeros(chr_size)
+		chr_meth_data = meth_data[meth_data['chr'] == chrname]
+		meth[chr_meth_data['pos'] - 1] = chr_meth_data['beta']
+		cg = meth[chr_cg_index - 1]
+
+		cg_meth = np.append(cg_meth, cg)
+		genome_meth = np.append(genome_meth, meth)
 
 	print('meth_data size: {0}'.format(len(meth_data)))
-	print('hitted meth_data size: {0}'.format(len(cg[cg != 0])))
+	print('hitted meth_data size: {0}'.format(len(cg_meth)))
 
 	# generate hilbert curve
 
