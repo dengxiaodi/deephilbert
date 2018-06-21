@@ -46,8 +46,8 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 		seq = ref_seq[1]
 		print('    building cg indexes for reference sequence: {0}'.format(chrname))
 		chrlen = len(seq)
-		offset += chrlen
 		indexes = [m.start() for m in re.finditer("CG", seq)]
+		offset += chrlen
 		dict_cg_indexes[chrname] = [offset, chrlen, np.array(indexes)]
 	
 	if filename_cg_index == None :
