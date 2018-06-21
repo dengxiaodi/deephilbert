@@ -73,6 +73,8 @@ if __name__ == "__main__":
 		dtype = ('S12', '<f8', 'S8', '<u8'),
 		names = ('ref', 'beta', 'chr', 'pos'))
 
+	print(meth_data)
+
 	print('[*] building methylation data list')
 	cg_meth = np.array([], dtype = '<f8')
 	genome_meth = np.array([], dtype = '<f8')
