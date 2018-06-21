@@ -87,6 +87,9 @@ if __name__ == "__main__":
 		meth[chr_meth_data['pos'] - 1] = chr_meth_data['beta']
 		cg = meth[chr_cg_index - 1]
 
+		print(np.sort(chr_meth_data['pos'] - 1))
+		print(np.sort(chr_cg_index - 1))
+
 		cg_meth = np.append(cg_meth, cg)
 		genome_meth = np.append(genome_meth, meth)
 
