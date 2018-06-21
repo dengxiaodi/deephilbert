@@ -73,8 +73,6 @@ if __name__ == "__main__":
 		dtype = ('|S12', '<f8', '|S8', '<u8'),
 		names = ('ref', 'beta', 'chr', 'pos'))
 
-	print(meth_data)
-
 	print('[*] building methylation data list')
 	cg_meth = np.array([], dtype = '<f8')
 	genome_meth = np.array([], dtype = '<f8')
@@ -89,17 +87,14 @@ if __name__ == "__main__":
 		meth[chr_meth_data['pos'] - 1] = chr_meth_data['beta']
 		cg = meth[chr_cg_index - 1]
 
-		print(np.sort(chr_meth_data['pos'] - 1))
-		print(np.sort(chr_cg_index - 1))
-
 		cg_meth = np.append(cg_meth, cg)
 		genome_meth = np.append(genome_meth, meth)
 
-	print('meth_data size: {0}'.format(len(meth_data)))
-	print('hitted meth_data size: {0}'.format(len(cg_meth[cg_meth != 0])))
+	# print('meth_data size: {0}'.format(len(meth_data)))
+	# print('hitted meth_data size: {0}'.format(len(cg_meth[cg_meth != 0])))
 
 	# generate hilbert curve
 
-	# generate_hilbert_map(cg, 10)
+	generate_hilbert_map(cg_meth, 10)
 
 	print('[*] complete')
