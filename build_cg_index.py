@@ -48,7 +48,7 @@ def build_cg_index(filename_ref_seq, filename_cg_index) :
 		chrlen = len(seq)
 		offset += chrlen
 		indexes = [m.start() for m in re.finditer("CG", seq)]
-		dict_cg_indexes[chrname] = [(offset, chrlen, np.array(indexes))]
+		dict_cg_indexes[chrname] = [offset, chrlen, np.array(indexes)]
 	
 	if filename_cg_index == None :
 		filename_cg_index = os.path.splitext(os.path.basename(filename_ref_seq))[0] + '.cgidx'

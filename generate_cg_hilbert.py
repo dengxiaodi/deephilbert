@@ -39,54 +39,62 @@ if __name__ == "__main__":
 	parser.add_argument("-d", "--index", dest = "index", required = True,
 		help = "cg index cgidx.npz file", metavar = "FILE")
 	parser.add_argument("-o", "--output", dest = "output", required = True,
-		help = "output foldername", metavar = "FOLDER")
-	parser.add_argument("-c", "--chr", dest = "chr", required = False,
-		help = "output only chr", metavar = "CHROMESOME")
+		help = "output foldername", metavar = "FILE")
 
 	args = parser.parse_args()
 	filename_input = args.input
 	filename_index = args.index
-	folder_output = args.output
+	filename_output = args.output
 
 	# parameter check
 
 	if not os.path.isfile(filename_input) :
-		print("[~] TCGA methylation.text file \"" + filename_input + "\" does not exist!")
+		print("[~] cleaned methylation file \"{0}\" does not exist!".format(filename_input))
 		exit(-1)
 
 	if not os.path.isfile(filename_index) :
-		print(".cgidx.npz file \"" + filename_index + "\" does not exist!")
+		print("[~] CG index .cgidx.npz file \"{0}\" does not exist!".format(filename_index))
 		exit(-1)
 
-	if os.path.isdir(folder_output) :
-		shutil.rmtree(folder_output, ignore_errors = True)
-	os.makedirs(folder_output)
-
+	if os.path.isfile(filename_output) :
+		os.unlink(filename_output)
+	
 	# load indexes
 
-	cg_index = np.load(filename_index)
-	chrsize = cg_index['chrsize']
-	cg_indexes = cg_index['indexes']
-
-	print('[*] cg indexes loaded')
+	print('[*] loading cg indexes')
+	cg_indexes_file = np.load(filename_index)
+	cg_indexes = cg_indexes_file['indexes']
+	dict_cg_indexes = cg_indexes.item()
+	
 
 	# load methylation data
 
-	methy_data = np.genfromtxt(filename_input, delimiter = ',', 
+	print('[*] loading methyaltion data')
+	meth_data = np.genfromtxt(filename_input, delimiter = ',', 
 		dtype = ('S12', '<f8', 'S8', '<u8'),
 		names = ('ref', 'beta', 'chr', 'pos'))
-	methy_genome = np.zeros(chrsize)
-	methy_genome[methy_data['pos']] = methy_data['beta']
-	methy_cg = methy_genome[cg_indexes]
 
-	print(methy_data['pos'])
-	print(cg_indexes)
+	print('[*] building methylation data list')
+	cgs = []
+	genome_size = 0
+	for chrname in dict_cg_indexes :
+		chrdata = dict_cg_indexes[chrname]
+		genome_size += chrdata[1]
+		cgs_offset = chrdata[2] + chrdata[0]
+		cgs += cgs_offset
+
+	genome = np.zeros(genome_size)
+	genome[meth_data['pos']] = meth_data['beta']
+	cg = genome[cgs]
+
+	print(meth_data['pos'])
+	print(cgs)
 
 	# generate hilbert curve
 
-	print(methy_genome)
-	print(methy_cg[methy_cg != 0])
+	print(genome)
+	print(cg[cg != 0])
 
-	generate_hilbert_map(methy_cg, 10)
+	generate_hilbert_map(cg, 10)
 
 	print('[*] complete')
