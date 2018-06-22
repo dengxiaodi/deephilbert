@@ -33,7 +33,7 @@ if __name__ == "__main__":
 		exit(-1)
 
 	if folder_output == None :
-		folder_output = os.path.basename(folder_input) + '_hb'
+		folder_output = os.path.basename(os.path.normpath(folder_input)) + '_hb'
 
 	if os.path.isdir(folder_output) :
 		shutil.rmtree(folder_output, ignore_errors = True)
