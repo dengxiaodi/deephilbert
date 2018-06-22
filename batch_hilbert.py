@@ -63,8 +63,8 @@ if __name__ == "__main__":
 	# processing meta data
 
 	for i in xrange(0, len(meta_data), n_p):
-        p_data =  meta_data[i:i + n_p]
-        print("i:\n")
-        print(p_data)
+		p_data =  meta_data[i:i + n_p]
+		print("i:\n")
+		print(p_data)
 
 	print('[*] complete')
