@@ -59,9 +59,6 @@ if __name__ == "__main__":
 		print("[~] CG index .cgidx.npz file \"{0}\" does not exist!".format(filename_index))
 		exit(-1)
 
-	if os.path.isfile(filename_output) :
-		os.unlink(filename_output)
-
 	if filename_output == None :
 		filename_output = os.path.splitext(os.path.basename(filename_input))[0]
 	
