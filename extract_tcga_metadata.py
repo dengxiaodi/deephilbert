@@ -24,7 +24,7 @@ def extract_tcga_metadata(metadata, output_file) :
 		if len(cases) :
 			case_info = cases[0]
 		else :
-			print("warning: cases info of file {0} is missing, skipped".format(file_id))
+			print("[!]: cases info of file {0} is missing, skipped".format(file_id))
 			error_count += 1
 			continue
 
@@ -38,7 +38,7 @@ def extract_tcga_metadata(metadata, output_file) :
 			gender = (demographic_info['gender'] == 'male')
 			race = demographic_info['race']
 		else :
-			print("warning: demographic info of file {0} is missing, skipped".format(file_id))
+			print("[!]: demographic info of file {0} is missing, skipped".format(file_id))
 			error_count += 1
 			continue
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 	# check files existence
 
 	if not os.path.isfile(filename_metadata) :
-		print("TCGA metadata.json file \"" + filename_metadata + "\" does not exist!")
+		print("[*] TCGA metadata.json file \"{0}\" does not exist!".format(filename_metadata))
 		exit(-1)
 
 	# open files
@@ -102,7 +102,7 @@ if __name__ == "__main__":
 		metadata = json.load(file_metadata)
 		total_count, success_count, error_count = extract_tcga_metadata(metadata, file_output)
 
-	print("complete: {0} items scanned, {1} items extracted, {2} item failed.".format(total_count, success_count, error_count))
+	print("[*] complete: {0} items scanned, {1} items extracted, {2} item failed.".format(total_count, success_count, error_count))
 
 
 
