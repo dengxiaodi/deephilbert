@@ -10,10 +10,10 @@ from multiprocessing import Process
 from multiprocessing import Pool
 from multiprocessing import cpu_count, current_process
 
-def batch_hilbert(meta_list) :
+def batch_hilbert(meta_chunk) :
 	proc_name = current_process().name
-	print('[*] processing {0} records on process {1}'.format(len(meta_list), proc_name))
-	for meta in meta_list :
+	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
+	for meta in meta_chunk :
 		pass
 
 
@@ -70,11 +70,11 @@ if __name__ == "__main__":
 	# processing meta data
 
 	p = Pool(n_p)
-	for i in xrange(0, len(meta_data), n_p):
-		p_data =  meta_data[i:i + n_p]
-		p.apply_async(batch_hilbert, (p_data, ))
+	meta_data_chunks = np.array_split(meta_data, n_p)
+	for meta_chunk in meta_data_chunks:
+		p.apply_async(batch_hilbert, (meta_chunk, ))
 
 	p.close()
 	p.join()
-	
+
 	print('[*] complete')
