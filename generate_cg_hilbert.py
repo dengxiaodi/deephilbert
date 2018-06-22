@@ -15,19 +15,16 @@ import matplotlib.cm as cm
 
 import hilbert as hb
 
-def generate_hilbert_map(v, r) :
+def generate_hilbert_map(v, r, N, filename) :
 	plt_data = np.array(hb.hilbert_plot(v, r))
 	x = plt_data[:, 0]
 	y = plt_data[:, 1]
 	z = plt_data[:, 2]
-	N = 300j
 
-	print(max(x))
-	print(max(y))
 	dmax = 2**r
 	xs, ys = np.mgrid[0:dmax:N, 0:dmax:N]
 	zs = griddata((x, y), z, (xs, ys))
-	plt.imsave("t.png", zs.T, cmap = cm.gray_r, vmin = 0, vmax = 1)
+	plt.imsave(filename, zs.T, cmap = cm.gray_r, vmin = 0, vmax = 1)
 
 if __name__ == "__main__":
 
@@ -38,13 +35,19 @@ if __name__ == "__main__":
 		help = "methylation.txt with betavalue downloaded from TCGA data repository", metavar = "FILE")
 	parser.add_argument("-d", "--index", dest = "index", required = True,
 		help = "cg index cgidx.npz file", metavar = "FILE")
-	parser.add_argument("-o", "--output", dest = "output", required = True,
-		help = "output foldername", metavar = "FILE")
+	parser.add_argument("-o", "--output", dest = "output", required = False,
+		help = "output filename", metavar = "FILE")
+	parser.add_argument("-r", "--resolution", dest = "resolution", required = False, type = int, default = 10,
+		help = "hilbert resolution", metavar = "INTEGER")
+	parser.add_argument("-N", "--image-point", dest = "N", required = False, type = int, default = 300,
+		help = "image point in imaginary form", metavar = "INTEGER")
 
 	args = parser.parse_args()
 	filename_input = args.input
 	filename_index = args.index
 	filename_output = args.output
+	image_size = complex(args.N)
+	resolution = args.resolution
 
 	# parameter check
 
@@ -58,6 +61,9 @@ if __name__ == "__main__":
 
 	if os.path.isfile(filename_output) :
 		os.unlink(filename_output)
+
+	if filename_output == None :
+		filename_output = os.path.splitext(os.path.basename(filename_input))[0]
 	
 	# load indexes
 
@@ -90,11 +96,12 @@ if __name__ == "__main__":
 		cg_meth = np.append(cg_meth, cg)
 		genome_meth = np.append(genome_meth, meth)
 
-	# print('meth_data size: {0}'.format(len(meth_data)))
-	# print('hitted meth_data size: {0}'.format(len(cg_meth[cg_meth != 0])))
-
 	# generate hilbert curve
 
-	generate_hilbert_map(cg_meth, 10)
+	print('[*] generating hilbert map')
+	generate_hilbert_map(cg_meth, resolution, image_size, filename_output + '.cg.png')
+	print('    CG based hilbert map {0}.cg.png written'.format(filename_output))
+	generate_hilbert_map(genome_meth, resolution, image_size, filename_output + '.genome.png')
+	print('    genome based hilbert map {0}.genome.png written'.format(filename_output))
 
 	print('[*] complete')
