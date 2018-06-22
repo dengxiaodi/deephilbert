@@ -97,8 +97,4 @@ if __name__ == "__main__":
 
 	print('[*] generating hilbert map')
 	generate_hilbert_map(cg_meth, resolution, image_size, filename_output + '.cg.png')
-	print('    CG based hilbert map {0}.cg.png written'.format(filename_output))
-	generate_hilbert_map(genome_meth, resolution, image_size, filename_output + '.genome.png')
-	print('    genome based hilbert map {0}.genome.png written'.format(filename_output))
-
-	print('[*] complete')
+	print('[*] CG based hilbert map {0}.cg.png written'.format(filename_output))

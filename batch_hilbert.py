@@ -6,6 +6,9 @@ import os
 import shutil
 import numpy as np
 from numpy import genfromtxt
+from multiprocessing import Process
+from multiprocessing import Pool
+from multiprocessing import cpu_count
 
 if __name__ == "__main__":
 
@@ -18,11 +21,14 @@ if __name__ == "__main__":
 		help = "cleaned meta filename", metavar = "FILE")
 	parser.add_argument("-o", "--output", dest = "output", required = False,
 		help = "output folder", metavar = "FOLDER")
+	parser.add_argument("-p", "--process", dest = "process", required = False,
+		help = "number of parallel processes", metavar = "INTEGER")
 
 	args = parser.parse_args()
 	folder_input = args.input
 	filename_meta = args.meta
 	folder_output = args.output
+	n_p = args.process
 
 	if not os.path.isdir(folder_input) :
 		print('[~] "{0}" input does not exist!'.format(folder_input))
@@ -39,6 +45,13 @@ if __name__ == "__main__":
 		shutil.rmtree(folder_output, ignore_errors = True)
 	os.makedirs(folder_output)
 
+	if n_p == None :
+		n_p = cpu_count()
+		print('[!] missing parallel parameters, using CPU count {0}'.format(n_p))
+		if n_p <= 0 :
+			n_p = 1
+			print('[!] undetected CPU count, using 1')
+
 	# read & parse meta file
 
 	print('[*] parsing meta file ...')
@@ -49,7 +62,9 @@ if __name__ == "__main__":
 	
 	# processing meta data
 
-	for meta in meta_data :
-		print(meta)
+	for i in xrange(0, len(meta_data), n_p):
+        p_data =  meta_data[i:i + n_p]
+        print("i:\n")
+        print(p_data)
 
 	print('[*] complete')
