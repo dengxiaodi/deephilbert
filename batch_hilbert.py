@@ -10,11 +10,29 @@ from multiprocessing import Process
 from multiprocessing import Pool
 from multiprocessing import cpu_count, current_process
 
-def batch_hilbert(meta_chunk) :
+def batch_hilbert(meta_chunk, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
 	for meta in meta_chunk :
-		pass
+		
+		# mkdir & clean meth data
+		
+		folder_meta = os.path.join(folder_output, meta['file_id'])
+		try:
+			os.stat(folder_meta)
+		except:
+			os.mkdir(folder_meta)
+
+		# read input file
+
+		filename_meth = os.path.join(folder_input, meta['file_id'], meta['file_name'])
+		if not os.path.isfile(filename_meth) :
+			print('[!] methylation file "{0}" does not exist, skip'.format(filename_meth))
+			pass
+		filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
+		os.system('clean_meth_data -i ' + filename_meth + ' -o ' + filename_meth_clean)
+
+		# generate hilbert map for cleaned meth data
 
 
 if __name__ == "__main__":
@@ -72,7 +90,7 @@ if __name__ == "__main__":
 	p = Pool(n_p)
 	meta_data_chunks = np.array_split(meta_data, n_p)
 	for meta_chunk in meta_data_chunks:
-		p.apply_async(batch_hilbert, (meta_chunk, ))
+		p.apply_async(batch_hilbert, (meta_chunk, folder_input, folder_output, ))
 
 	p.close()
 	p.join()
