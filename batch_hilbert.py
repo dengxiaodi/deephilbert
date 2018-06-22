@@ -44,7 +44,7 @@ if __name__ == "__main__":
 	print('[*] parsing meta file ...')
 	meta_data = genfromtxt(filename_meta, delimiter = ',',
 		autostrip = True,
-		dtype = ('|S64', '|S128', '|S32', '|S64', 'b', '<f8', '|S16', 'b', '<i4', '|S32', 'b'),
+		dtype = ('|S64', '|S128', '|S32', '|S64', 'b1', '<f8', '|S16', 'b1', '<i4', '|S32', 'b1'),
 		names = ('file_id', 'file_name', 'primary_site', 'disease_type', 'gender', 'age', 'race', 'is_tumor', 'sample_type_id', 'sample_type', 'is_alive'))
 	
 	# processing meta data
