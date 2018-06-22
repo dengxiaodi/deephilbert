@@ -30,7 +30,7 @@ def batch_hilbert(meta_chunk, folder_input, folder_output) :
 			print('[!] methylation file "{0}" does not exist, skip'.format(filename_meth))
 			pass
 		filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
-		os.system('clean_meth_data -i ' + filename_meth + ' -o ' + filename_meth_clean)
+		os.system('clean_meth_data.py -i ' + filename_meth + ' -o ' + filename_meth_clean)
 
 		# generate hilbert map for cleaned meth data
 
