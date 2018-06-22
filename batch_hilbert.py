@@ -8,7 +8,14 @@ import numpy as np
 from numpy import genfromtxt
 from multiprocessing import Process
 from multiprocessing import Pool
-from multiprocessing import cpu_count
+from multiprocessing import cpu_count, current_process
+
+def batch_hilbert(meta_list) :
+	proc_name = current_process().name
+	print('[*] processing {0} records on process {1}'.format(len(meta_list), proc_name))
+	for meta in meta_list :
+		pass
+
 
 if __name__ == "__main__":
 
@@ -62,9 +69,12 @@ if __name__ == "__main__":
 	
 	# processing meta data
 
+	p = Pool(n_p)
 	for i in xrange(0, len(meta_data), n_p):
 		p_data =  meta_data[i:i + n_p]
-		print("i:\n")
-		print(p_data)
+		p.apply_async(batch_hilbert, (p_data, ))
 
+	p.close()
+	p.join()
+	
 	print('[*] complete')
