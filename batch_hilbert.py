@@ -10,6 +10,9 @@ from multiprocessing import Process
 from multiprocessing import Pool
 from multiprocessing import cpu_count, current_process
 
+script_path = os.path.abspath(os.path.dirname(sys.argv[0]))
+clean_meth_script = os.path.join(script_path, 'clean_meth_data.py')
+
 def batch_hilbert(meta_chunk, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
@@ -30,7 +33,7 @@ def batch_hilbert(meta_chunk, folder_input, folder_output) :
 			print('[!] methylation file "{0}" does not exist, skip'.format(filename_meth))
 			pass
 		filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
-		os.system('clean_meth_data.py -i ' + filename_meth + ' -o ' + filename_meth_clean)
+		os.system(clean_meth_script + ' -i ' + filename_meth + ' -o ' + filename_meth_clean)
 
 		# generate hilbert map for cleaned meth data
 
