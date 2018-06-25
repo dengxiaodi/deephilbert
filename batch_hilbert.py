@@ -56,7 +56,7 @@ if __name__ == "__main__":
 		help = "cleaned meta filename", metavar = "FILE")
 	parser.add_argument("-o", "--output", dest = "output", required = False,
 		help = "output folder", metavar = "FOLDER")
-	parser.add_argument("-p", "--process", dest = "process", required = False,
+	parser.add_argument("-p", "--process", dest = "process", required = False, type = int,
 		help = "number of parallel processes", metavar = "INTEGER")
 
 	args = parser.parse_args()
