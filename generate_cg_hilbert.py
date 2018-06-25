@@ -91,7 +91,7 @@ if __name__ == "__main__":
 		cg = meth[chr_cg_index - 1]
 
 		cg_meth = np.append(cg_meth, cg)
-		genome_meth = np.append(genome_meth, meth)
+		# genome_meth = np.append(genome_meth, meth)
 
 	# generate hilbert curve
 
