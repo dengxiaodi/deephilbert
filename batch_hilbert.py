@@ -13,8 +13,9 @@ from multiprocessing import cpu_count, current_process
 
 script_path = os.path.abspath(os.path.dirname(sys.argv[0]))
 clean_meth_script = os.path.join(script_path, 'clean_meth_data.py')
+generate_cg_hilbert_script = os.path.join(script_path, 'generate_cg_hilbert.py')
 
-def batch_hilbert(meta_chunk, folder_input, folder_output) :
+def batch_hilbert(meta_chunk, filename_index, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
 	for meta in meta_chunk :
@@ -38,6 +39,9 @@ def batch_hilbert(meta_chunk, folder_input, folder_output) :
 
 		# generate hilbert map for cleaned meth data
 
+		filename_hilbert_map = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
+		os.system(generate_cg_hilbert_script + ' -i ' + filename_meth_clean + ' -d '  + filename_index + ' -o ' + filename_hilbert_map)
+
 
 if __name__ == "__main__":
 
@@ -46,6 +50,8 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description = "batch generating hilbert map")
 	parser.add_argument("-i", "--input", dest = "input", required = True,
 		help = "input data folder", metavar = "FOLDER")
+	parser.add_argument("-d", "--index", dest = "index", required = True,
+		help = "cg index cgidx.npz file", metavar = "FILE")
 	parser.add_argument("-m", "--meta", dest = "meta", required = True,
 		help = "cleaned meta filename", metavar = "FILE")
 	parser.add_argument("-o", "--output", dest = "output", required = False,
@@ -56,6 +62,7 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 	folder_input = args.input
 	filename_meta = args.meta
+	filename_index = args.index
 	folder_output = args.output
 	n_p = args.process
 
@@ -65,6 +72,10 @@ if __name__ == "__main__":
 
 	if not os.path.isfile(filename_meta) :
 		print('[~] meta file "{0}" does not exist!'.format(filename_meta))
+		exit(-1)
+
+	if not os.path.isfile(filename_index) :
+		print("[~] CG index .cgidx.npz file \"{0}\" does not exist!".format(filename_index))
 		exit(-1)
 
 	if folder_output == None :
@@ -94,7 +105,7 @@ if __name__ == "__main__":
 	p = Pool(n_p)
 	meta_data_chunks = np.array_split(meta_data, n_p)
 	for meta_chunk in meta_data_chunks:
-		p.apply_async(batch_hilbert, (meta_chunk, folder_input, folder_output, ))
+		p.apply_async(batch_hilbert, (meta_chunk, filename_index, folder_input, folder_output, ))
 
 	p.close()
 	p.join()
