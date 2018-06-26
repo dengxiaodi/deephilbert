@@ -62,13 +62,12 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 
 		cg_meth = np.append(cg_meth, cg)
 		# genome_meth = np.append(genome_meth, meth)
-		print('    {0} parsed'.format(chrname))
 	
 	filename_cg_meth = filename_output + '.cg.meth'
 	# filename_genome_meth = filename_output + '.genome.meth'
 	np.savez(filename_cg_meth, meth = cg_meth)
 	# np.savez(filename_genome_meth, meth = genome_meth)
-	print(' {0} written'.format(filename_cg_meth))
+	# print('    {0} written'.format(filename_cg_meth + '.npz'))
 	# print(' {0} written'.format(filename_genome_meth))
 
 def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output, total_count, current_count) :
@@ -98,6 +97,7 @@ def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output, total_
 
 	filename_cg_meth = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
 	generate_cg_data(meth_data, dict_cg_indexes, filename_cg_meth)
+	print('[*] meta {0} on process {1} complete.'.format(meta['file_id'], proc_name))
 
 if __name__ == "__main__":
 
