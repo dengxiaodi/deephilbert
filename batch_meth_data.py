@@ -97,7 +97,7 @@ def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output, total_
 
 	filename_cg_meth = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
 	generate_cg_data(meth_data, dict_cg_indexes, filename_cg_meth)
-	print('[*] meta {0} on process {1} complete.'.format(meta['file_id'], proc_name))
+	print('[*] meta {0} on process {1} complete (#{2})'.format(meta['file_id'], proc_name, current_count))
 
 if __name__ == "__main__":
 
@@ -140,7 +140,7 @@ if __name__ == "__main__":
 	if os.path.isdir(folder_output) :
 		shutil.rmtree(folder_output, ignore_errors = True)
 	os.makedirs(folder_output)
-	
+
 	if n_p == None :
 		n_p = cpu_count()
 		print('[!] missing parallel parameters, using CPU count {0}'.format(n_p))
