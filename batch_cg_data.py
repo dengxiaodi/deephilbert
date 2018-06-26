@@ -68,6 +68,34 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 		np.savez(filename_cg_meth, meth = cg_meth)
 		np.savez(filename_genome_meth, meth = genome_meth)
 
+def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output) :
+	proc_name = current_process().name
+	print('[*] processing meta {0} on process {1}'.format(meta['file_id'], proc_name))
+
+	# mkdir & clean meth data
+		
+	folder_meta = os.path.join(folder_output, meta['file_id'])
+	try:
+		os.stat(folder_meta)
+	except:
+		os.mkdir(folder_meta)
+
+	# load meth data
+
+	filename_meth = os.path.join(folder_input, meta['file_id'], meta['file_name'])
+	if not os.path.isfile(filename_meth) :
+		print('[!] methylation file "{0}" does not exist, skip'.format(filename_meth))
+		pass
+	filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
+
+	meth_data = load_meth_data(filename_meth)
+	write_meth_data(meth_data, filename_meth_clean)
+
+	# generate cg data
+
+	generate_cg_data(meth_data, dict_cg_indexes, filename_meth)
+
+
 def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
@@ -161,9 +189,9 @@ if __name__ == "__main__":
 	# processing meta data
 
 	p = Pool(n_p)
-	meta_data_chunks = np.array_split(meta_data, n_p)
-	for meta_chunk in meta_data_chunks:
-		p.apply_async(batch_cg_data, (meta_chunk, dict_cg_indexes, folder_input, folder_output, ))
+	# meta_data_chunks = np.array_split(meta_data, n_p)
+	for meta in meta_data:
+		p.apply_async(process_meta_data, (meta, dict_cg_indexes, folder_input, folder_output, ))
 
 	p.close()
 	p.join()
