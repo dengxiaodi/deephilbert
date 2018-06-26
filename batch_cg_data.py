@@ -43,7 +43,7 @@ def load_meth_data(filename_meth) :
 
 def write_meth_data(meth_data, filename_output) :
 	np.savetxt(filename_output, 
-		methy_data, 
+		meth_data, 
 		fmt=('%s, %f, %s, %ld'), 
 		delimiter = ',')
 
@@ -89,7 +89,6 @@ def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output) :
 	filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
 
 	meth_data = load_meth_data(filename_meth)
-	print(meth_data)
 	write_meth_data(meth_data, filename_meth_clean)
 
 	# generate cg data
