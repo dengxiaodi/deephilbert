@@ -49,7 +49,7 @@ def write_meth_data(meth_data, filename_output) :
 
 def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 	cg_meth = np.array([], dtype = '<f8')
-	genome_meth = np.array([], dtype = '<f8')
+	# genome_meth = np.array([], dtype = '<f8')
 	for chrname in dict_cg_indexes :
 		chrdata = dict_cg_indexes[chrname]
 		chr_size = chrdata[1]
@@ -61,15 +61,15 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 		cg = meth[chr_cg_index - 1]
 
 		cg_meth = np.append(cg_meth, cg)
-		genome_meth = np.append(genome_meth, meth)
+		# genome_meth = np.append(genome_meth, meth)
 		print('    {0} parsed'.format(chrname))
 	
 	filename_cg_meth = filename_output + '.cg.meth'
-	filename_genome_meth = filename_output + '.genome.meth'
+	# filename_genome_meth = filename_output + '.genome.meth'
 	np.savez(filename_cg_meth, meth = cg_meth)
-	np.savez(filename_genome_meth, meth = genome_meth)
+	# np.savez(filename_genome_meth, meth = genome_meth)
 	print(' {0} written'.format(filename_cg_meth))
-	print(' {0} written'.format(filename_genome_meth))
+	# print(' {0} written'.format(filename_genome_meth))
 
 def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output, total_count, current_count) :
 	proc_name = current_process().name
