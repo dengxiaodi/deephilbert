@@ -100,7 +100,7 @@ def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
 
 		# filename_hilbert_map = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
 		# os.system(generate_cg_hilbert_script + ' -i ' + filename_meth_clean + ' -d '  + filename_index + ' -o ' + filename_hilbert_map)
-
+	print('shit')
 
 if __name__ == "__main__":
 
