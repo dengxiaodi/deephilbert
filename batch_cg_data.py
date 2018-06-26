@@ -63,8 +63,8 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 		cg_meth = np.append(cg_meth, cg)
 		genome_meth = np.append(genome_meth, meth)
 	
-	filename_cg_meth = os.path.splitext(os.path.basename(filename_output))[0] + '.cg.meth'
-	filename_genome_meth = os.path.splitext(os.path.basename(filename_output))[0] + '.genome.meth'
+	filename_cg_meth = filename_output + '.cg.meth'
+	filename_genome_meth = filename_output + '.genome.meth'
 	np.savez(filename_cg_meth, meth = cg_meth)
 	np.savez(filename_genome_meth, meth = genome_meth)
 
