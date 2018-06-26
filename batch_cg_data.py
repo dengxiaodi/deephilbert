@@ -71,6 +71,7 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
+	print("what is going on here?")
 	for meta in meta_chunk :
 		print('    on process {0}:  processing meta {1}'.format(proce_name, meta['file_id']))
 		
@@ -99,7 +100,6 @@ def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
 
 		# filename_hilbert_map = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
 		# os.system(generate_cg_hilbert_script + ' -i ' + filename_meth_clean + ' -d '  + filename_index + ' -o ' + filename_hilbert_map)
-	print('shit')
 
 if __name__ == "__main__":
 
