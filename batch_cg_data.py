@@ -51,7 +51,6 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 	cg_meth = np.array([], dtype = '<f8')
 	genome_meth = np.array([], dtype = '<f8')
 	for chrname in dict_cg_indexes :
-		print('    parsing: {0}'.format(chrname))
 		chrdata = dict_cg_indexes[chrname]
 		chr_size = chrdata[1]
 		chr_cg_index = chrdata[2]
@@ -63,14 +62,15 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 
 		cg_meth = np.append(cg_meth, cg)
 		genome_meth = np.append(genome_meth, meth)
-		filename_cg_meth = os.path.splitext(os.path.basename(filename_output))[0] + '.cg.meth'
-		filename_genome_meth = os.path.splitext(os.path.basename(filename_output))[0] + '.genome.meth'
-		np.savez(filename_cg_meth, meth = cg_meth)
-		np.savez(filename_genome_meth, meth = genome_meth)
+	
+	filename_cg_meth = os.path.splitext(os.path.basename(filename_output))[0] + '.cg.meth'
+	filename_genome_meth = os.path.splitext(os.path.basename(filename_output))[0] + '.genome.meth'
+	np.savez(filename_cg_meth, meth = cg_meth)
+	np.savez(filename_genome_meth, meth = genome_meth)
 
-def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output) :
+def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output, total_count, current_count) :
 	proc_name = current_process().name
-	print('[*] processing meta {0} on process {1}'.format(meta['file_id'], proc_name))
+	print('[*] processing meta {0} on process {1} [{2} / {3}]'.format(meta['file_id'], proc_name, current_count, total_count))
 
 	# mkdir & clean meth data
 		
@@ -93,7 +93,8 @@ def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output) :
 
 	# generate cg data
 
-	generate_cg_data(meth_data, dict_cg_indexes, filename_meth)
+	filename_cg_meth = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
+	generate_cg_data(meth_data, dict_cg_indexes, filename_cg_meth)
 
 if __name__ == "__main__":
 
@@ -155,8 +156,11 @@ if __name__ == "__main__":
 	# processing meta data
 
 	p = Pool(n_p)
+	total_count = len(meta_data)
+	current_count = 0
 	for meta in meta_data:
-		p.apply_async(process_meta_data, (meta, dict_cg_indexes, folder_input, folder_output, ))
+		current_count += 1
+		p.apply_async(process_meta_data, (meta, dict_cg_indexes, folder_input, folder_output, total_count, current_count, ))
 
 	p.close()
 	p.join()
