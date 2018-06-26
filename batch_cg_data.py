@@ -72,7 +72,7 @@ def generate_cg_data(meth_data, dict_cg_indexes, filename_output) :
 
 def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output, total_count, current_count) :
 	proc_name = current_process().name
-	print('[*] processing meta {0} on process {1} [{2} / {3}]'.format(meta['file_id'], proc_name, current_count, total_count))
+	print('[*] processing meta {0} on process {1} ({2}/{3})'.format(meta['file_id'], proc_name, current_count, total_count))
 
 	# mkdir & clean meth data
 		
