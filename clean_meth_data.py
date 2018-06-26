@@ -8,6 +8,10 @@ import shutil
 import numpy as np
 from numpy import genfromtxt
 
+
+# script_path = os.path.abspath(os.path.dirname(sys.argv[0]))
+# clean_meth_script = os.path.join(script_path, 'clean_meth_data.py')
+
 def clean_meth_data(filename_input, filename_output) :
 	methy_data = genfromtxt(filename_input, delimiter = '\t', skip_header = 1,
 		usecols = (0, 1, 2, 3), autostrip = True,
