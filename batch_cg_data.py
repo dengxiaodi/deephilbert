@@ -72,6 +72,8 @@ def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
 	for meta in meta_chunk :
+
+		print('    on process {0}:  processing meta {1}'.format(proce_name, meta['file_id']))
 		
 		# mkdir & clean meth data
 		
@@ -151,7 +153,7 @@ if __name__ == "__main__":
 
 	# read & parse meta file
 
-	print('[*] parsing meta file ...')
+	print('[*] parsing meta file')
 	meta_data = load_meta_data(filename_meta)
 
 	print('[*] loading cg indexes')
@@ -163,7 +165,7 @@ if __name__ == "__main__":
 	meta_data_chunks = np.array_split(meta_data, n_p)
 	for meta_chunk in meta_data_chunks:
 		p.apply_async(batch_cg_data, (meta_chunk, dict_cg_indexes, folder_input, folder_output, ))
-		
+
 	p.close()
 	p.join()
 
