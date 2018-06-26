@@ -72,7 +72,6 @@ def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
 	proc_name = current_process().name
 	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
 	for meta in meta_chunk :
-
 		print('    on process {0}:  processing meta {1}'.format(proce_name, meta['file_id']))
 		
 		# mkdir & clean meth data
