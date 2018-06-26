@@ -89,45 +89,12 @@ def process_meta_data(meta, dict_cg_indexes, folder_input, folder_output) :
 	filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
 
 	meth_data = load_meth_data(filename_meth)
+	print(meth_data)
 	write_meth_data(meth_data, filename_meth_clean)
 
 	# generate cg data
 
 	generate_cg_data(meth_data, dict_cg_indexes, filename_meth)
-
-
-def batch_cg_data(meta_chunk, dict_cg_indexes, folder_input, folder_output) :
-	proc_name = current_process().name
-	print('[*] processing {0} records on process {1}'.format(len(meta_chunk), proc_name))
-	print("what is going on here?")
-	for meta in meta_chunk :
-		print('    on process {0}:  processing meta {1}'.format(proce_name, meta['file_id']))
-		
-		# mkdir & clean meth data
-		
-		folder_meta = os.path.join(folder_output, meta['file_id'])
-		try:
-			os.stat(folder_meta)
-		except:
-			os.mkdir(folder_meta)
-
-		# load meth data
-
-		filename_meth = os.path.join(folder_input, meta['file_id'], meta['file_name'])
-		if not os.path.isfile(filename_meth) :
-			print('[!] methylation file "{0}" does not exist, skip'.format(filename_meth))
-			pass
-		filename_meth_clean = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0] + '.clean.csv')
-
-		meth_data = load_meth_data(filename_meth)
-		write_meth_data(meth_data, filename_meth_clean)
-
-		# generate cg data
-
-		generate_cg_data(meth_data, dict_cg_indexes, filename_meth)
-
-		# filename_hilbert_map = os.path.join(folder_meta, os.path.splitext(meta['file_name'])[0])
-		# os.system(generate_cg_hilbert_script + ' -i ' + filename_meth_clean + ' -d '  + filename_index + ' -o ' + filename_hilbert_map)
 
 if __name__ == "__main__":
 
@@ -189,7 +156,6 @@ if __name__ == "__main__":
 	# processing meta data
 
 	p = Pool(n_p)
-	# meta_data_chunks = np.array_split(meta_data, n_p)
 	for meta in meta_data:
 		p.apply_async(process_meta_data, (meta, dict_cg_indexes, folder_input, folder_output, ))
 
