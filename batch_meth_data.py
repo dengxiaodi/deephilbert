@@ -135,12 +135,12 @@ if __name__ == "__main__":
 		exit(-1)
 
 	if folder_output == None :
-		folder_output = os.path.basename(os.path.normpath(folder_input)) + '_hb'
+		folder_output = os.path.basename(os.path.normpath(folder_input)) + '_meth'
 
 	if os.path.isdir(folder_output) :
 		shutil.rmtree(folder_output, ignore_errors = True)
 	os.makedirs(folder_output)
-
+	
 	if n_p == None :
 		n_p = cpu_count()
 		print('[!] missing parallel parameters, using CPU count {0}'.format(n_p))
