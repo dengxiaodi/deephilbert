@@ -155,7 +155,6 @@ if __name__ == "__main__":
 
 	print('[*] parsing meta file')
 	meta_data = load_meta_data(filename_meta)
-	print(meta_data)
 
 	print('[*] loading cg indexes')
 	dict_cg_indexes = load_cg_indexes(filename_index)
@@ -165,6 +164,7 @@ if __name__ == "__main__":
 	p = Pool(n_p)
 	meta_data_chunks = np.array_split(meta_data, n_p)
 	for meta_chunk in meta_data_chunks:
+		print(meta_chunk)
 		p.apply_async(batch_cg_data, (meta_chunk, dict_cg_indexes, folder_input, folder_output, ))
 
 	p.close()
