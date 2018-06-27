@@ -47,7 +47,7 @@ def process_hilbert(meta, r, N, folder_input, folder_output, total_count, curren
 
 	# load meth data
 
-	filename_cg_meth = os.path.join(folder_input, os.path.splitext(meta['file_name'])[0] + '.cg.meth.npz')
+	filename_cg_meth = os.path.join(folder_input, meta['file_id'], os.path.splitext(meta['file_name'])[0] + '.cg.meth.npz')
 	if not os.path.isfile(filename_cg_meth) :
 		print('[!] methylation data file "{0}" does not exist, skip'.format(filename_cg_meth))
 		pass
