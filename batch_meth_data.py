@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
 	# command line arguments
 
-	parser = argparse.ArgumentParser(description = "batch generating hilbert map")
+	parser = argparse.ArgumentParser(description = "batch genrate meth data")
 	parser.add_argument("-i", "--input", dest = "input", required = True,
 		help = "input data folder", metavar = "FOLDER")
 	parser.add_argument("-d", "--index", dest = "index", required = True,
