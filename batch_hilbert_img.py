@@ -11,6 +11,16 @@ from multiprocessing import Process
 from multiprocessing import Pool
 from multiprocessing import cpu_count, current_process
 
+import matplotlib as mpl
+if os.environ.get('DISPLAY','') == '':
+    print('[!] No display found, using non-interactive Agg backend')
+    mpl.use('Agg')
+import matplotlib.pyplot as plt
+from scipy.interpolate import griddata
+import matplotlib.cm as cm
+
+import hilbert as hb
+
 def load_meta_data(filename_meta) :
 	meta_data = genfromtxt(filename_meta, delimiter = ',',
 		autostrip = True,
@@ -60,6 +70,8 @@ def process_hilbert(meta, r, N, folder_input, folder_output, total_count, curren
 	generate_hilbert_map(cg_meth_data, r, N, filename_hilbert)
 	print('[*] meta {0} on process {1} complete (#{2})'.format(meta['file_id'], proc_name, current_count))
 	print('[*] {0} written'.format(filename_hilbert))
+	sys.stdout.flush()
+	sys.stderr.flush()
 
 if __name__ == "__main__":
 
